@@ -1,1 +1,130 @@
-# Hhhhh
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+        .button {
+            background-color: #333333;
+            color: #ffffff;
+            font-size: 1.5rem;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin: 0.25rem;
+            text-align: center;
+            cursor: pointer;
+        }
+        .button-orange {
+            background-color: #ff9500;
+            color: #ffffff;
+        }
+        .button-gray {
+            background-color: #a6a6a6;
+            color: #000000;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen">
+    <div class="flex justify-between w-full px-4 py-2">
+        <span></span>
+    </div>
+    <div class="flex flex-col items-end w-full px-4 py-2">
+        <div id="display" class="text-5xl">0</div>
+    </div>
+    <div class="grid grid-cols-4 gap-2 p-4">
+        <div class="button button-gray" onclick="clearDisplay()">AC</div>
+        <div class="button button-gray" onclick="deleteLast()">⌫</div>
+        <div class="button button-gray" onclick="appendOperator('%')">%</div>
+        <div class="button button-orange" onclick="appendOperator('/')">÷</div>
+        <div class="button" onclick="appendNumber('7')">7</div>
+        <div class="button" onclick="appendNumber('8')">8</div>
+        <div class="button" onclick="appendNumber('9')">9</div>
+        <div class="button button-orange" onclick="appendOperator('*')">×</div>
+        <div class="button" onclick="appendNumber('4')">4</div>
+        <div class="button" onclick="appendNumber('5')">5</div>
+        <div class="button" onclick="appendNumber('6')">6</div>
+        <div class="button button-orange" onclick="appendOperator('-')">-</div>
+        <div class="button" onclick="appendNumber('1')">1</div>
+        <div class="button" onclick="appendNumber('2')">2</div>
+        <div class="button" onclick="appendNumber('3')">3</div>
+        <div class="button button-orange" onclick="appendOperator('+')">+</div>
+        <div class="button" onclick="multiplyByTen()">x10</div>
+        <div class="button" onclick="appendNumber('0')">0</div>
+        <div class="button" onclick="appendDot()">.</div>
+        <div class="button button-orange" onclick="calculate()">=</div>
+    </div>
+
+    <script>
+        let displayValue = '0';
+        let isEvaluated = false;
+
+        function updateDisplay() {
+            document.getElementById('display').innerText = displayValue;
+        }
+
+        function clearDisplay() {
+            displayValue = '0';
+            isEvaluated = false;
+            updateDisplay();
+        }
+
+        function deleteLast() {
+            displayValue = displayValue.slice(0, -1) || '0';
+            updateDisplay();
+        }
+
+        function appendNumber(number) {
+            if (displayValue === '0' || isEvaluated) {
+                displayValue = number;
+                isEvaluated = false;
+            } else {
+                displayValue += number;
+            }
+            updateDisplay();
+        }
+
+        function appendOperator(operator) {
+            if (isEvaluated) {
+                isEvaluated = false;
+            }
+            if (!['+', '-', '*', '/'].includes(displayValue.slice(-1))) {
+                displayValue += operator;
+            }
+            updateDisplay();
+        }
+
+        function appendDot() {
+            if (isEvaluated) {
+                displayValue = '0';
+                isEvaluated = false;
+            }
+            if (!displayValue.includes('.')) {
+                displayValue += '.';
+            }
+            updateDisplay();
+        }
+
+        function multiplyByTen() {
+            displayValue = (parseFloat(displayValue) * 10).toString();
+            updateDisplay();
+        }
+
+        function calculate() {
+            try {
+                if (!['+', '-', '*', '/'].includes(displayValue.slice(-1))) {
+                    displayValue = eval(displayValue.replace('%', '/100')).toString();
+                    isEvaluated = true;
+                }
+            } catch (e) {
+                displayValue = 'Error';
+            }
+            updateDisplay();
+        }
+    </script>
+</body>
+</html>
