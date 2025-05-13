@@ -1,1 +1,15 @@
 
+[
+  {
+    "url": "https://path-to-your-audio-file1.mp3",
+    "desc": "وصف الريكورد الأول"
+  },
+  {
+    "url": "https://path-to-your-audio-file2.mp3",
+    "desc": "وصف الريكورد الثاني"
+  },
+  {
+    "url": "https://path-to-your-audio-file3.mp3",
+    "desc": "وصف الريكورد الثالث"
+  }
+]
